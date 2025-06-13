@@ -163,8 +163,6 @@ class Dataset(torch.utils.data.Dataset):
             stats: pl.DataFrame = stats.to_polars().with_columns(
                 index=pl.arange(offset, offset + len(data)),
             )
-            if 'visrag' in d['name'] or 'colpali' in d['name']:
-                d["sample"] = 300000
             if "sample" in d:
                 if d["sample"] == "-1" or d["sample"] > len(data):
                     stats = stats

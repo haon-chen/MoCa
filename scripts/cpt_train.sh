@@ -11,7 +11,7 @@ if [ -z "$MODEL_NAME_OR_PATH" ]; then
 fi
 
 if [ -z "$OUTPUT_DIR" ]; then
-  OUTPUT_DIR="./checkpoint/ft_$(date +%F-%H%M.%S)"
+  OUTPUT_DIR="./checkpoint/cpt_$(date +%F-%H%M.%S)"
 fi
 
 if [ -z "$DATA_DIR" ]; then
@@ -61,8 +61,8 @@ if [ -z "$MAX_LEN" ]; then
   MAX_LEN=1280
 fi
 
-deepspeed --num_nodes "${WORLD_SIZE}" --master_port "${MASTER_PORT}" --master_addr "${MASTER_ADDR}" pretrain_mlm.py --deepspeed "${DS_CONFIG_PATH}" \
-    --dataset_path "${DATA_DIR}/dclm_20b,${DATA_DIR}/pixelprose_commonpool,${DATA_DIR}/mammoth_full_dataset_cleaned_sampled_2m,${DATA_DIR}/MMEB-train/full_dataset_cleaned,${DATA_DIR}/docmatix,${DATA_DIR}/visrag_ind_unfiltered,${DATA_DIR}/visrag_syn_unfiltered,${DATA_DIR}/tevatron_colpali_pre_valid" \
+deepspeed --master_port 18273 cl_train.py --deepspeed "${DS_CONFIG_PATH}" \
+    --dataset_path "${DATA_DIR}/cpt/dclm_20b,${DATA_DIR}/cpt/pixelprose_commonpool,${DATA_DIR}/cpt/mammoth_full_dataset_cleaned_sampled_2m,${DATA_DIR}/cpt/MMEB-train/full_dataset_cleaned,${DATA_DIR}/cpt/docmatix,${DATA_DIR}/cpt/visrag_ind_unfiltered,${DATA_DIR}/cpt/visrag_syn_unfiltered,${DATA_DIR}/cpt/tevatron_colpali_pre_valid" \
     --num_sample_per_subset 500000 \
     --model_name "${MODEL_NAME_OR_PATH}" --bf16 --pooling last \
     --dataloader_num_workers 4 \

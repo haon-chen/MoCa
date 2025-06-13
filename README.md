@@ -13,29 +13,49 @@ We convert causal Vision‑Language Models into *bidirectional* multimodal embed
 - **2025‑06‑10:** Initial release – paper, training scripts, checkpoints, and evaluation notebooks.
 
 ## Quick Start
-```bash
-git clone https://github.com/<user>/tme-cp && cd tme-cp
+
+```
 pip install -r requirements.txt
-# Download images (≈1 TB)
-bash scripts/prepare_images.sh
-# Training
-bash scripts/train/train.sh
-# Evaluation
-bash scripts/eval/eval_mmeb.sh
-# Encode your own data
-python demo.py --text "Pepper the aussie pup" --image path/to/img.jpg
 ```
 
-## Resources
+- Preparation
 
-- **Synthetic + Real Data** covering captions, VQA, long‑form docs (MMEB, ViDoRe, etc.).
-- **Checkpoints**: 3 B & 7 B bidirectional encoders (FP16 & INT8).
-- **Evaluation**: Scripts for MMEB, ViDoRe‑v1/v2, XTD‑10.
+```
+bash scripts/prepare_images.sh
+```
 
-## Reproducing Table 1
-All MMEB scores can be reproduced with:
-```bash
-bash scripts/reproduce/mmeb_7b.sh  # 1×A100‑80G, <3 h
+This script will download images from [Synthetic Dataset](https://huggingface.co/datasets/intfloat/mmE5-synthetic), [MMEB with Hard Negative](https://huggingface.co/datasets/intfloat/mmE5-MMEB-hardneg), [MMEB-eval](https://huggingface.co/datasets/TIGER-Lab/MMEB-eval).
+
+**Caution:** This could take a while as the images are large in size. Make sure you have enough disk space (at least 1T).
+
+We have provided example scripts in the `scripts/` directory to help you get started with training and evaluation.
+
+- Continual Pre-training
+```
+bash scripts/cpt_train.sh
+```
+- Contrastive Learning
+```
+bash scripts/cl_train.sh
+```
+- Test MMEB
+```
+bash scripts/eval_full.sh
+```
+- Test ViDoRe-v2
+
+1. Install vidore-benchmark package following [this repo](https://github.com/illuin-tech/vidore-benchmark).
+
+2. Move __init__.py and mmeb_qwen25_retriever.py from /evaluation/vidore_benchmark/ to the vidore-benchmark repo (src/vidore_benchmark/evaluation).
+
+3. Run
+```
+bash scripts/eval_vidore.sh
+```
+
+You can also use `demo.py` to embed your own text and images.
+```
+python demo.py
 ```
 
 ## Acknowledgement
