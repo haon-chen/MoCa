@@ -8,8 +8,6 @@ import torch.nn.functional as F
 def compute_similarity(q_reps, p_reps):
     return torch.matmul(q_reps, p_reps.transpose(0, 1))
 
-from huggingface_hub import login
-login("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")
 model_name = "Haon-Chen/mmE5-qwen25-7B"
 processor_name = "Qwen/Qwen2.5-VL-7B-Instruct"
 
