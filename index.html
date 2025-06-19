@@ -155,6 +155,182 @@
   </section>
   <!-- End paper abstract -->
 
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <img src="static/images/fig1l.png" alt="Previous causal multimodal embeddings" style="height: 300px;"/>
+          <img src="static/images/fig1r.png" alt="MoCa" style="height: 300px;"/>
+        </div>
+        <!-- <h2 class="subtitle has-text-centered">
+          Comparison of VLM-based multimodal embedding models.
+        </h2> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- MoCa method -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">MoCa: <u>Mo</u>dality-aware <u>C</u>ontinual Pre-tr<u>a</u>ining</h2>
+          <div class="content has-text-justified">
+            <p>
+              Starting from pre-trained VLMs, our approach consists of two stages:
+              <ol>
+                <li><strong>Modality-aware Continual Pre-training</strong>: We introduce a joint reconstruction objective that requires the model to simultaneously denoise interleaved text and image inputs, which encourages the model to jointly reason across modalities.
+                  <ol>
+                    <li><strong>For text</strong>: We apply masked language modeling (MLM), where masked tokens are predicted using the full multimodal context.</li>
+                    <li><strong>For images</strong>: We adopt a masked autoencoding (MAE) strategy: a subset of image patches is randomly masked and reconstructed by a lightweight decoder conditioned on image and text contexts.</li>
+                  </ol>
+                </li>
+                <li><strong>Heterogeneous Contrastive Fine-tuning</strong>: As opposed to previous works which used mainly image-caption pairs, we add diverse heterogeneous data including:
+                  <ol>
+                    <li><strong>Long-form query-document pairs</strong>: Supporting document-level understanding and complex reasoning over extended context</li>
+                    <li><strong>Curated multimodal pairs</strong>: Offering various visual and textual contexts beyond image captions of specific distributions</li>
+                    <li><strong>Real-world text pairs</strong>: Enhancing linguistic representations across diverse domains</li>
+                  </ol>
+                </li>
+              </ol>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="content has-text-justified">
+            <img src="static/images/fig2.png" alt="MoCa"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Overall Results -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Overall Results</h2>
+          <div class="content has-text-justified">
+            <p>
+              We present the general multimodal embedding performances on MMEB in Table~\ref{tab:mmeb} and the long-form document-level retrieval performances in Table~\ref{vidore-v2}.
+              Our model, \ours{}, surpasses all strong baselines on both benchmarks, demonstrating the effectiveness of our training pipeline in improving multimodal embedding quality.
+              Besides, several key findings emerge from the results:
+
+              more text explaining benchmarks.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="content has-text-justified">
+            <p>
+              Below are the results on the MMEB benchmark, which includes 36 tasks across four categories: Classification, Visual Question Answering (VQA), Retrieval, and Visual Grounding.
+              In addition to existing baselines, we train three variants of Qwen-2.5-VL with different model sizes and attention types.
+              We highlight the best scores in <strong>bold</strong> and the second-best scores with an <u>underline</u>.
+            </p>
+            <img src="static/images/mteb.png" alt="mteb"/>
+            <p>
+              Below are the results on the ViDoRe-v2 benchmark, which includes 7 tasks.
+            "Syn" is short for synthetic, "Mul" is short for multilingual, and "Bio" is short for Biomedical.
+            We highlight the best scores in <strong>bold</strong> and the second-best scores with an <u>underline</u>.
+            </p>
+            <img src="static/images/vidore_v2.png" alt="vidore"/>
+            <p>Analysis:</p>
+            <ol>
+                <li>The combination of a VLM backbone with bidirectional attention, continual pretraining (CPT), and heterogeneous contrastive learning (CL) consistently outperforms other variants.
+                Specifically, we find that <strong>"bidirectional + CPT + CL"</strong> yields better results than <strong>"causal + CL"</strong>, which itself outperforms <strong>"bidirectional + CL"</strong> without CPT.
+                This confirms the importance of modality-aware pretraining in unlocking the full potential of bidirectional architectures.</li>
+                <li>After applying continual pretraining for 30B tokens, our 3B model with bidirectional adaptation achieves better performance than 7B baselines trained with only contrastive learning.</li>
+                <li>Scaling our approach to a 7B model leads to clear gains across all task categories in MMEB, setting new state-of-the-art results.</li>
+                <li>On Vidore, our 3B model achieves the best average performance despite using significantly fewer parameters.
+                This demonstrates the effectiveness of our training strategy in producing robust embeddings.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ablation studies -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Ablation Studies</h2>
+          <div class="content has-text-justified">
+            <p>
+              To understand the contribution of each major design choice in our framework, we conduct ablation studies on both the <em>Modality-aware Continual Pre-training</em> and <em>Heterogeneous Contrastive Fine-tuning</em> stages.
+              As shown in in the following table, removing any key component leads to a consistent performance drop on both benchmarks (MMEB and Vidore-v2), demonstrating the importance of each part.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <img src="static/images/ablation.png" alt="ablation studies" style="height: 250px;"/>
+          <div class="content has-text-justified">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scaling law -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Data Scaling Effect for Continual Pre-training</h2>
+          <div class="content has-text-justified">
+            <p>
+              To assess how the data scale of CPT affects the quality of the learned embeddings, we investigate the
+              scaling effect of our framework. We conduct contrastive fine-tuning (CL) using checkpoints saved at
+              different steps during a single CPT run for both 3B and 7B models.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="content has-text-justified">
+            <img src="static/images/scaling_law.png" alt="scaling law"/>
+            <p>
+              As shown in the figure, the downstream performance on MMEB steadily improves as the number of
+              CPT steps increases. This demonstrates that modality-aware pre-training helps the model develop
+              stronger bidirectional representations, which are then more effectively aligned during contrastive
+              fine-tuning. The results demonstrate that CPT provides a progressively better initialization for CL,
+              leading to more robust and transferable multimodal embeddings.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <!-- Image carousel -->
   <!-- <section class="hero is-small">
