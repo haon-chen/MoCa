@@ -16,6 +16,7 @@ We convert causal Vision‑Language Models into *bidirectional* multimodal embed
 
 ```
 pip install -r requirements.txt
+pip install flash-attn==2.5.8
 ```
 
 - Preparation

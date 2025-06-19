@@ -1,6 +1,7 @@
 accelerate==0.34.0
 datasets==2.19.2
 deepspeed==0.14.4
+einops==0.8.1
 huggingface-hub>=0.28.1
 ipython==8.22.2
 numpy==1.26.4
@@ -14,5 +15,4 @@ tqdm==4.66.4
 transformers==4.50.3
 triton>=3.1.0
 trl>=0.8.6
-flash-attn==2.5.8
 liger_kernel==0.5.5
