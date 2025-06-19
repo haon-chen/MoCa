@@ -220,11 +220,8 @@
           <h2 class="title is-3">Overall Results</h2>
           <div class="content has-text-justified">
             <p>
-              We present the general multimodal embedding performances on MMEB in Table~\ref{tab:mmeb} and the long-form document-level retrieval performances in Table~\ref{vidore-v2}.
-              Our model, \ours{}, surpasses all strong baselines on both benchmarks, demonstrating the effectiveness of our training pipeline in improving multimodal embedding quality.
-              Besides, several key findings emerge from the results:
-
-              more text explaining benchmarks.
+              We present the general multimodal embedding performances on MMEB and the long-form document-level retrieval performances.
+              MoCa surpasses all strong baselines on both benchmarks, demonstrating the effectiveness of our training pipeline in improving multimodal embedding quality.
             </p>
           </div>
         </div>
@@ -249,7 +246,7 @@
             We highlight the best scores in <strong>bold</strong> and the second-best scores with an <u>underline</u>.
             </p>
             <img src="static/images/vidore_v2.png" alt="vidore"/>
-            <p>Analysis:</p>
+            <p>Several key findings emerge from the results:</p>
             <ol>
                 <li>The combination of a VLM backbone with bidirectional attention, continual pretraining (CPT), and heterogeneous contrastive learning (CL) consistently outperforms other variants.
                 Specifically, we find that <strong>"bidirectional + CPT + CL"</strong> yields better results than <strong>"causal + CL"</strong>, which itself outperforms <strong>"bidirectional + CL"</strong> without CPT.
