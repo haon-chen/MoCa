@@ -285,6 +285,15 @@
         <div class="column is-four-fifths">
           <img src="static/images/ablation.png" alt="ablation studies" style="height: 250px;"/>
           <div class="content has-text-justified">
+            <p><strong>Modality-aware Continual Pre-training.</strong> The ablation of either the <em>Masked Language Modeling</em> (MLM) or the <em>Masked Autoencoding</em> (MAE) objective results in a performance decline, indicating that both text and image reconstruction are essential for learning modality-specific representations.
+            Disabling <em>both</em> yields the largest decline, demonstrating the joint effectiveness between MLM and MAE in training a robust bidirectional encoder.</p>
+
+            <p><strong>Heterogeneous Contrastive Fine-tuning.</strong> We then evaluate the effect of different types of training data used during contrastive fine-tuning.
+            Removing <em>text-only pairs</em> results in a noticeable drop, showing their importance for maintaining strong language representations.
+            Excluding <em>long-form document retrieval pairs</em> (VisRAG and the training set of ColPali) also hurts performance, especially on ViDoRe, demonstrating their value in supporting deeper reasoning over extended contexts.
+            Finally, removing the <em>task-aware batching</em> technique, where data from different tasks are jointly trained in each batch, leads to performance degradation.
+            This technique helps prevent the model from overfitting to task-specific patterns and encourages it to learn more sample-discriminative representations, which is crucial for generalization across diverse task formats.</p>
+
           </div>
         </div>
       </div>
