@@ -11,7 +11,7 @@ from transformers import AutoProcessor
 
 from src.model import MMEBModel
 from src.dataset import EvalDataset
-from src.collator import EvalCollator, LlamaEvalCollator
+from src.collator import EvalCollator
 from torch.utils.data import DataLoader
 import torch
 from tqdm import tqdm
@@ -20,9 +20,6 @@ import pickle
 import os
 from datasets import load_dataset, load_from_disk
 from evaluation.eval_utils import get_pred
-
-from huggingface_hub import login
-from IPython import embed
 
 data_group = {
     "IND": ["ImageNet-1K", "N24News", "HatefulMemes", "SUN397", "VOC2007", "InfographicsVQA", "ChartQA", "A-OKVQA", "DocVQA", "OK-VQA", "Visual7W", "VisDial", "CIRR", "NIGHTS", "WebQA", "VisualNews_i2t", "VisualNews_t2i", "MSCOCO_i2t", "MSCOCO_t2i", "MSCOCO"],
@@ -115,18 +112,11 @@ def main():
     model.eval()
     model = model.to(training_args.device, dtype=torch.bfloat16)
 
-    if model_args.model_name and model_args.model_backbone == "mllama":
-        eval_collator = LlamaEvalCollator(
-            data_args=data_args,
-            model_args=model_args,
-            processor=processor,
-        )
-    else:
-        eval_collator = EvalCollator(
-            data_args=data_args,
-            model_args=model_args,
-            processor=processor,
-        )
+    eval_collator = EvalCollator(
+        data_args=data_args,
+        model_args=model_args,
+        processor=processor,
+    )
 
     logger.info(f"Loading model with backbone: {model_args.model_backbone}")
     logger.info(f"Model num_labels: {model.config.num_labels}")

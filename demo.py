@@ -8,8 +8,8 @@ import torch.nn.functional as F
 def compute_similarity(q_reps, p_reps):
     return torch.matmul(q_reps, p_reps.transpose(0, 1))
 
-model_name = "Haon-Chen/mmE5-qwen25-7B"
-processor_name = "Qwen/Qwen2.5-VL-7B-Instruct"
+model_name = "Haon-Chen/mmE5-qwen25-3B"
+processor_name = "Qwen/Qwen2.5-VL-3B-Instruct"
 
 # Load Processor and Model
 processor = AutoProcessor.from_pretrained(processor_name)
@@ -28,13 +28,13 @@ string = 'A cat and a dog'
 text_inputs = processor(text=string, return_tensors="pt").to("cuda")
 tgt_output = F.normalize(model(**text_inputs, return_dict=True, output_hidden_states=True), dim=-1)
 print(string, '=', compute_similarity(qry_output, tgt_output))
-## A cat and a dog = tensor([[0.4531]], device='cuda:0', dtype=torch.bfloat16)
+## A cat and a dog = tensor([[0.4395]], device='cuda:0', dtype=torch.bfloat16)
 
 string = 'A cat and a tiger'
 text_inputs = processor(text=string, return_tensors="pt").to("cuda")
 tgt_output = F.normalize(model(**text_inputs, return_dict=True, output_hidden_states=True), dim=-1)
 print(string, '=', compute_similarity(qry_output, tgt_output))
-## A cat and a tiger = tensor([[0.4551]], device='cuda:0', dtype=torch.bfloat16)
+## A cat and a tiger = tensor([[0.4258]], device='cuda:0', dtype=torch.bfloat16)
 
 # Text -> Image
 inputs = processor(text='Find me an everyday image that matches the given caption: A cat and a dog.\n', return_tensors="pt").to("cuda")
@@ -44,7 +44,7 @@ string = '<|vision_start|><|image_pad|><|vision_end|>Represent the given image.\
 tgt_inputs = processor(text=string, images=[Image.open('figures/example.jpg')], return_tensors="pt").to("cuda")
 tgt_output = F.normalize(model(**tgt_inputs, return_dict=True, output_hidden_states=True), dim=-1)
 print(string, '=', compute_similarity(qry_output, tgt_output))
-## <|vision_start|><|image_pad|><|vision_end|>Represent the given image. = tensor([[0.1885]], device='cuda:0', dtype=torch.bfloat16)
+## <|vision_start|><|image_pad|><|vision_end|>Represent the given image. = tensor([[0.1748]], device='cuda:0', dtype=torch.bfloat16)
 
 inputs = processor(text='Find me an everyday image that matches the given caption: A cat and a tiger.\n', return_tensors="pt").to("cuda")
 qry_output = F.normalize(model(**inputs, return_dict=True, output_hidden_states=True), dim=-1)
@@ -53,4 +53,4 @@ string = '<|vision_start|><|image_pad|><|vision_end|>Represent the given image.\
 tgt_inputs = processor(text=string, images=[Image.open('figures/example.jpg')], return_tensors="pt").to("cuda")
 tgt_output = F.normalize(model(**tgt_inputs, return_dict=True, output_hidden_states=True), dim=-1)
 print(string, '=', compute_similarity(qry_output, tgt_output))
-## <|vision_start|><|image_pad|><|vision_end|>Represent the given image. = tensor([[0.1621]], device='cuda:0', dtype=torch.bfloat16)
+## <|vision_start|><|image_pad|><|vision_end|>Represent the given image. = tensor([[0.1455]], device='cuda:0', dtype=torch.bfloat16)

@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/v-chenhaonan/multimodal/mmE5-qwen25/')
+sys.path.extend(['.', '..'])
 from typing import Dict, Optional
 import torch.nn.functional as F
 import torch
@@ -8,14 +8,8 @@ from torch import nn, Tensor
 from transformers import PreTrainedModel, AutoModelForCausalLM, AutoConfig, AutoModel, MllamaForConditionalGeneration, MllamaProcessor, LlavaNextForConditionalGeneration 
 from peft import LoraConfig, get_peft_model, PeftModel
 from src.arguments import ModelArguments, TrainingArguments
-from IPython import embed
-import copy
-from src.utils import place_tensors_on_diagonal
 from src.model_utils import QWEN2_VL, QWEN2_5_VL
 from src.vlm_backbone.qwen2_5_vl_embed.qwen2_5_vl_embed import Qwen2_5ForEmbedding, Qwen2_5ForMLMMAE
-from src.vlm_backbone.qwen2_5_vl_embed.modeling_qwen2_5_vl import Qwen2_5_VLForConditionalGeneration
-import os
-import json
 import logging
 
 logger = logging.getLogger(__name__)
@@ -111,7 +105,6 @@ class MMEBModel(nn.Module):
                 attn_implementation='flash_attention_2',
                 torch_dtype=torch.bfloat16,
                 bidirectional=model_args.bidirectional,
-                use_linear_projection=model_args.use_linear_projection
             )
         else:
 
@@ -187,8 +180,6 @@ class MMEBModel(nn.Module):
         logger.info(f"Loading model from checkpoint: {checkpoint_path}")
         logger.info(f"Model arguments: {model_args}")
         
-        _adjust_adapter_config_path(checkpoint_path)
-        
         if model_args.model_name:
             config = AutoConfig.from_pretrained(model_args.model_name, trust_remote_code=True)
             if hasattr(config, 'use_cache'):
@@ -200,7 +191,6 @@ class MMEBModel(nn.Module):
                 attn_implementation='flash_attention_2',
                 torch_dtype=torch.bfloat16,
                 bidirectional=model_args.bidirectional,
-                use_linear_projection=model_args.use_linear_projection
             )
         elif model_args.model_backbone == "llava_next":
             config.use_cache = False
