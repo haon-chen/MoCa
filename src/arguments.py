@@ -71,7 +71,14 @@ class ModelArguments:
         default=0.1,
         metadata={"help": "Weight for MAE loss when combining with MLM loss"}
     )
-
+    min_patch_size: int = field(
+        default=256,
+        metadata={"help": "Minimum patch size for MAE"}
+    )
+    max_patch_size: int = field(
+        default=1024,
+        metadata={"help": "Maximum patch size for MAE"}
+    )
 
 @dataclass
 class DataArguments:

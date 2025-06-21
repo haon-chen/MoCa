@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import torch
 import torch.distributed as dist
 from torch import nn, Tensor
-from transformers import PreTrainedModel, AutoModelForCausalLM, AutoConfig, AutoModel, MllamaForConditionalGeneration, MllamaProcessor, LlavaNextForConditionalGeneration 
+from transformers import PreTrainedModel, AutoModelForCausalLM, AutoConfig, MllamaForConditionalGeneration, LlavaNextForConditionalGeneration 
 from peft import LoraConfig, get_peft_model, PeftModel
 from src.arguments import ModelArguments, TrainingArguments
 from src.model_utils import QWEN2_VL, QWEN2_5_VL
@@ -148,7 +148,6 @@ class MMEBModel(nn.Module):
             trainable_modules = ['linear']
             for name, param in lora_model.named_parameters():
                 if any(module_name in name for module_name in trainable_modules):
-                    print(f"Training {name}")
                     param.requires_grad = True
 
             model = cls(
@@ -335,7 +334,6 @@ class MMEBModelForMLMMAE(MMEBModel):
             config.text_config.use_cache = False
 
         if model_args.model_backbone in [QWEN2_VL, QWEN2_5_VL]:
-            from src.vlm_backbone.qwen2_5_vl_embed.qwen2_5_vl_embed import Qwen2_5ForMAE
             base_model = Qwen2_5ForMLMMAE.from_pretrained(
                 model_args.model_name,
                 attn_implementation='flash_attention_2',
@@ -344,7 +342,7 @@ class MMEBModelForMLMMAE(MMEBModel):
             )
             cls.init_weights(base_model)
         else:
-            raise NotImplementedError("MMEBModelForMLMMAE 只支持 QWEN2_VL/QWEN2_5_VL backbone")
+            raise NotImplementedError("MMEBModelForMLMMAE only supports QWEN2_VL/QWEN2_5_VL backbone")
 
         model = cls(
             encoder=base_model,

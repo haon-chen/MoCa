@@ -1,15 +1,9 @@
 from transformers.trainer import Trainer, TRAINING_ARGS_NAME
 import torch.distributed as dist
-from typing import Optional, Dict, Any
+from typing import Optional
 import os
 import torch
-from itertools import repeat
-from peft import set_peft_model_state_dict
-from transformers.trainer_utils import get_last_checkpoint
 import logging
-
-MAX_INPUT_ID = int(1e9)
-LLAVE_IMAGE_TOKEN_ID = 32000
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +35,7 @@ class MMEBTrainer(Trainer):
         torch.save(self.args, os.path.join(output_dir, TRAINING_ARGS_NAME))
 
 
-class MMEBMLMMAETrainer(MMEBMLMTrainer):
+class MMEBMLMMAETrainer(MMEBTrainer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._current_mlm_loss = None

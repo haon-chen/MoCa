@@ -14,7 +14,7 @@ from .nomic_retriever import NomicVisionRetriever
 from .registry_utils import VISION_RETRIEVER_REGISTRY, load_vision_retriever_from_registry, register_vision_retriever
 from .siglip_retriever import SigLIPRetriever
 from .vision_retriever import VisionRetriever
-from .mmeb_qwen25_retriever import MMEBQwen25Retriever
+from .moca_qwen25_retriever import MoCaQwen25Retriever
 
 __all__ = [
     "BaseVisionRetriever",
@@ -32,7 +32,7 @@ __all__ = [
     "NomicVisionRetriever",
     "SigLIPRetriever",
     "VisionRetriever",
-    "MMEBQwen25Retriever",
+    "MoCaQwen25Retriever",
     "VISION_RETRIEVER_REGISTRY",
     "load_vision_retriever_from_registry",
     "register_vision_retriever",

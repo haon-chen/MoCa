@@ -5,7 +5,7 @@ set -e
 
 
 if [ -z "$MODEL_NAME" ]; then
-  MODEL_NAME="intfloat/mmE5-mllama-11b-instruct"
+  MODEL_NAME="intfloat/MoCa-Qwen25VL-3B"
 fi
 if [ -z "$OUTPUT_DIR" ]; then
   OUTPUT_DIR="./outputs"

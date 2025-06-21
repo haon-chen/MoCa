@@ -62,7 +62,7 @@ if [ -z "$MAX_LEN" ]; then
 fi
 
 deepspeed --master_port 18273 cl_train.py --deepspeed "${DS_CONFIG_PATH}" \
-    --dataset_path "${DATA_DIR}/cpt/dclm_20b,${DATA_DIR}/cpt/pixelprose_commonpool,${DATA_DIR}/cpt/mammoth_full_dataset_cleaned_sampled_2m,${DATA_DIR}/cpt/MMEB-train/full_dataset_cleaned,${DATA_DIR}/cpt/docmatix,${DATA_DIR}/cpt/visrag_ind_unfiltered,${DATA_DIR}/cpt/visrag_syn_unfiltered,${DATA_DIR}/cpt/tevatron_colpali_pre_valid" \
+    --dataset_name "intfloat/dclm_20b,intfloat/pixelprose_commonpool,intfloat/pixelprose_cc12m_sub_005,intfloat/pixelprose_redcaps_sub_010,intfloat/MAmmoTH-VL-Instruct-12M,intfloat/MMEB-train,intfloat/docmatix,intfloat/visrag_ind,intfloat/visrag_syn,intfloat/tevatron_colpali" \
     --num_sample_per_subset 500000 \
     --model_name "${MODEL_NAME_OR_PATH}" --bf16 --pooling last \
     --dataloader_num_workers 4 \
@@ -70,6 +70,7 @@ deepspeed --master_port 18273 cl_train.py --deepspeed "${DS_CONFIG_PATH}" \
     --max_len ${MAX_LEN} --output_dir "${OUTPUT_DIR}" --logging_steps 5 \
     --lr_scheduler_type linear --learning_rate 2e-6 --max_grad_norm 5.0 \
     --warmup_ratio 0.1 --save_steps 200 --save_total_limit 10 --normalize True \
+    --min_patch_size 256 --max_patch_size 1024 \
     --micro_batch_size ${MICRO_BATCH_SIZE} \
     --per_device_train_batch_size ${BATCH_SIZE} \
     --model_backbone "${MODEL_BACKBONE}" \

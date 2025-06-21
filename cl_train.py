@@ -5,7 +5,7 @@ import os
 import warnings
 warnings.simplefilter("ignore", category=FutureWarning)
 
-from transformers import AutoTokenizer, AutoProcessor
+from transformers import AutoProcessor
 from transformers import (
     HfArgumentParser,
 )
@@ -16,13 +16,10 @@ from src.collator import QWEN25TrainCollator
 from src.arguments import ModelArguments, DataArguments, TrainingArguments
 from src.model import MMEBModel
 from src.trainer import MMEBTrainer
-import torch
 import torch.distributed as dist
 from transformers.trainer_utils import get_last_checkpoint
 
 logger = logging.getLogger(__name__)
-
-from huggingface_hub import HfApi, login
 
 def main():
     # a hack for torch.distributed.launch: https://github.com/huggingface/transformers/issues/22171
@@ -56,8 +53,8 @@ def main():
     if dist.get_world_size() == 1:
         force_download = False
     if model_args.model_backbone == 'qwen2_vl' or model_args.model_backbone == 'qwen2_5_vl':
-        min_pixels = 256*28*28
-        max_pixels = 1024*28*28
+        min_pixels = model_args.min_patch_size*28*28
+        max_pixels = model_args.max_patch_size*28*28
         processor = AutoProcessor.from_pretrained(
             model_args.processor_name if model_args.processor_name else model_args.model_name,
             trust_remote_code=True,
@@ -85,10 +82,8 @@ def main():
     collator = QWEN25TrainCollator(data_args, model_args, processor)
 
     model = MMEBModel.build(model_args, training_args)
-    print(model.encoder.linear.weight)
 
-    trainer_cls = GradCacheTrainer if training_args.grad_cache else MMEBTrainer
-    trainer = trainer_cls(
+    trainer = MMEBTrainer(
         model=model,
         args=training_args,
         train_dataset=train_dataset,
@@ -108,31 +103,7 @@ def main():
         else:
             print(f"Checkpoint {training_args.resume_from_checkpoint} not found")
             resume_from_checkpoint = None
-    try:
-        trainer.train(resume_from_checkpoint=resume_from_checkpoint)
-    except FileNotFoundError as e:
-        if resume_from_checkpoint is not None and "trainer_state.json" in str(e):
-            print(f"Checkpoint {resume_from_checkpoint} not found, trying previous checkpoint...")
-            def find_prev_checkpoint(ckpt_path):
-                import re
-                m = re.search(r"checkpoint-(\d+)", ckpt_path)
-                if not m:
-                    return None
-                num = int(m.group(1))
-                if num <= 100:
-                    return None
-                prev_num = num - 100
-                return re.sub(r"checkpoint-(\d+)", f"checkpoint-{prev_num}", ckpt_path)
-            prev_ckpt = find_prev_checkpoint(resume_from_checkpoint)
-            print(f"prev_ckpt: {prev_ckpt}")
-            if prev_ckpt is not None and os.path.exists(os.path.join(prev_ckpt, "trainer_state.json")):
-                print(f"Trying checkpoint {prev_ckpt}")
-                trainer.train(resume_from_checkpoint=prev_ckpt)
-            else:
-                print("No valid previous checkpoint found. Exiting.")
-                raise e
-        else:
-            raise e
+    trainer.train(resume_from_checkpoint=resume_from_checkpoint)    
     trainer.save_model(training_args.output_dir)
 
 

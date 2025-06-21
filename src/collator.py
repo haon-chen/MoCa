@@ -1,11 +1,10 @@
 import logging
 from dataclasses import dataclass
-from transformers import ProcessorMixin, AutoProcessor, AutoTokenizer
+from transformers import ProcessorMixin
 from src.arguments import DataArguments, ModelArguments
 import torch
-from PIL import ImageFile, Image
+from PIL import ImageFile
 from src.vlm_backbone.qwen2_5_vl_embed.utils_new import Truncation
-from src.model_utils import QWEN2_5_VL
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 

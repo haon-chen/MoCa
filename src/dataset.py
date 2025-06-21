@@ -1,7 +1,7 @@
 import random
-from typing import List, Tuple
+from typing import List
 import datasets
-from datasets import load_dataset, concatenate_datasets, load_from_disk
+from datasets import load_dataset, load_from_disk
 from torch.utils.data import Dataset
 from PIL import Image
 import os
@@ -24,10 +24,7 @@ class TaskBatchDataset(Dataset):
         if self.data_args.dataset_name or self.data_args.dataset_path:
             print(f"Loading {len(data_args.subset_name)} datasets: {data_args.subset_name}")
             for subset in data_args.subset_name:
-                if "colpali" in subset:
-                    num_sample = -1
-                else:
-                    num_sample = data_args.num_sample_per_subset
+                num_sample = data_args.num_sample_per_subset
                 if self.data_args.dataset_name:
                     subset_data = load_dataset(
                         self.data_args.dataset_name,
@@ -185,9 +182,7 @@ class EvalDataset(Dataset):
             self.eval_data = load_dataset(
                 self.data_args.dataset_name,
                 subset,
-                # split=f"{self.data_args.dataset_split}[:3]",
                 split=self.data_args.dataset_split,
-                download_mode="force_redownload"
             )
         elif self.data_args.dataset_path:
             subset_path = os.path.join(self.data_args.dataset_path, subset) 

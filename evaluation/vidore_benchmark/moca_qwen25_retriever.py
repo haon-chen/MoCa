@@ -12,8 +12,6 @@ from vidore_benchmark.retrievers.base_vision_retriever import BaseVisionRetrieve
 from vidore_benchmark.retrievers.registry_utils import register_vision_retriever
 from vidore_benchmark.utils.data_utils import ListDataset
 from vidore_benchmark.utils.torch_utils import get_torch_device
-import sys
-sys.path.append('/home/v-chenhaonan/multimodal/mmE5-qwen25/src')
 from model import MMEBModel
 from arguments import ModelArguments
 from model_utils import QWEN2_VL, QWEN2_5_VL, vlm_image_tokens
@@ -25,8 +23,8 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-@register_vision_retriever("mmeb-qwen25")
-class MMEBQwen25Retriever(BaseVisionRetriever):
+@register_vision_retriever("moca-qwen25")
+class MoCaQwen25Retriever(BaseVisionRetriever):
     """
     Vision retriever based on MMEBModel with Qwen2_5ForEmbedding.
     """
@@ -44,7 +42,7 @@ class MMEBQwen25Retriever(BaseVisionRetriever):
         image_resolution: str = "original",  # "original", "high" or "low"
         num_workers: int = 4,
         max_length: int = 512,
-        processor_name: str = "Qwen/Qwen2.5-VL-7B-Instruct",
+        processor_name: str = "Qwen/Qwen2.5-VL-3B-Instruct",
         **kwargs,
     ):
         super().__init__(use_visual_embedding=True)
@@ -62,7 +60,7 @@ class MMEBQwen25Retriever(BaseVisionRetriever):
         self.model_backbone = QWEN2_5_VL  # Use the constant from model_utils
         
         # Log all parameters for debugging
-        logger.info(f"Initializing MMEBQwen25Retriever with parameters:")
+        logger.info(f"Initializing MoCaQwen25Retriever with parameters:")
         logger.info(f"  model_path: {self.model_path}")
         logger.info(f"  device: {device} (resolved to: {self.device})")
         logger.info(f"  use_bidirectional: {use_bidirectional}")

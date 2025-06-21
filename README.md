@@ -1,4 +1,4 @@
-# [Transforming VLMs into Powerful Multimodal Encoders via Continual Pre‑training](https://arxiv.org/abs/XXXX.XXXXX)
+# [MoCa: Modality-aware Continual Pre-training Makes Better Bidirectional Multimodal Embeddings](https://arxiv.org/abs/XXXX.XXXXX)
 
 This repo hosts **code, checkpoints, and data scripts** for our paper **xxx**.
 We convert causal Vision‑Language Models into *bidirectional* multimodal embedders through a two‑stage pipeline:
@@ -25,7 +25,7 @@ pip install flash-attn==2.5.8
 bash scripts/prepare_images.sh
 ```
 
-This script will download images from [Synthetic Dataset](https://huggingface.co/datasets/intfloat/mmE5-synthetic), [MMEB with Hard Negative](https://huggingface.co/datasets/intfloat/mmE5-MMEB-hardneg), [MMEB-eval](https://huggingface.co/datasets/TIGER-Lab/MMEB-eval).
+This script will download images for Heterogeneous Contrastive Learning from [MoCa CL Pairs](https://huggingface.co/datasets/intfloat/mmE5-MMEB-hardneg), [mmE5 Synthetic Dataset](https://huggingface.co/datasets/intfloat/mmE5-synthetic), and [MMEB-eval](https://huggingface.co/datasets/TIGER-Lab/MMEB-eval).
 
 **Caution:** This could take a while as the images are large in size. Make sure you have enough disk space (at least 1T).
 
@@ -47,7 +47,7 @@ bash scripts/eval_full.sh
 
 1. Install vidore-benchmark package following [this repo](https://github.com/illuin-tech/vidore-benchmark).
 
-2. Move __init__.py and mmeb_qwen25_retriever.py from /evaluation/vidore_benchmark/ to the vidore-benchmark repo (src/vidore_benchmark/evaluation).
+2. Move `__init__.py` and `mmeb_qwen25_retriever.py` from `/evaluation/vidore_benchmark/` to the vidore-benchmark repo (`src/vidore_benchmark/evaluation`).
 
 3. Run
 ```

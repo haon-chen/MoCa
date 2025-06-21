@@ -27,7 +27,7 @@ if [ -z "$MODEL_BACKBONE" ]; then
 fi
 
 if [ -z "$PROCESSOR_NAME" ]; then
-  PROCESSOR_NAME="Qwen/Qwen2.5-VL-7B-Instruct"
+  PROCESSOR_NAME="Qwen/Qwen2.5-VL-3B-Instruct"
 fi
 
 if [ -z "$BIDIRECTIONAL" ]; then
@@ -47,8 +47,8 @@ if [ -z "$MAX_LEN" ]; then
 fi
 
 deepspeed --master_port 18271 train.py --deepspeed "${DS_CONFIG_PATH}" \
-    --subset_name visrag_ind visrag_syn tevatron_colpali trivia t2ranking squad s2orc quora orcas nq nli msmarco msmarco-doc mrtydi miracl kilt eli5 dureader codesearchnet bitext TAT-DQA ArxivQA InfoSeek_it2t InfoSeek_it2it ImageNet_1K N24News HatefulMemes SUN397 VOC2007 InfographicsVQA ChartQA A-OKVQA DocVQA OK-VQA Visual7W VisDial CIRR NIGHTS WebQA VisualNews_i2t VisualNews_t2i MSCOCO_i2t MSCOCO_t2i MSCOCO \
-    --dataset_path "${DATA_DIR}/contrastive_learning/MMEB-hardneg" \
+    --subset_name visrag_ind visrag_syn tevatron_colpali TAT-DQA ArxivQA InfoSeek_it2t InfoSeek_it2it ImageNet_1K N24News HatefulMemes SUN397 VOC2007 InfographicsVQA ChartQA A-OKVQA DocVQA OK-VQA Visual7W VisDial CIRR NIGHTS WebQA VisualNews_i2t VisualNews_t2i MSCOCO_i2t MSCOCO_t2i MSCOCO \
+    --dataset_name "intfloat/MoCa-CL-Pairs" \
     --model_name "${MODEL_NAME_OR_PATH}" --bf16 --pooling last \
     --num_sample_per_subset 50000 \
     --dataloader_num_workers 4 \
@@ -65,5 +65,6 @@ deepspeed --master_port 18271 train.py --deepspeed "${DS_CONFIG_PATH}" \
     --bidirectional ${BIDIRECTIONAL} \
     --negative_ratio 2 \
     --image_resolution "${IMAGE_RESOLUTION}" \
+    --min_patch_size 256 --max_patch_size 1024 \
     --use_task_batch ${USE_TASK_BATCH} \
     --report_to none "$@"

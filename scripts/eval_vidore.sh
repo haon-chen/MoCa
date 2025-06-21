@@ -4,7 +4,7 @@ set -x
 set -e
 
 if [ -z "$MODEL_NAME" ]; then
-    MODEL_NAME="intfloat/mmE5-qwen25-7B"
+    MODEL_NAME="intfloat/MoCa-Qwen25VL-3B"
 fi
 
 if [ -z "$COLLECTION_NAME" ]; then
@@ -20,7 +20,7 @@ if [ -z "$SPLIT" ]; then
 fi
 
 vidore-benchmark evaluate-retriever \
-    --model-class mmeb-qwen25 \
+    --model-class moca-qwen25 \
     --model-name "$MODEL_NAME" \
     --collection-name "$COLLECTION_NAME" \
     --dataset-format "$DATASET_FORMAT" \

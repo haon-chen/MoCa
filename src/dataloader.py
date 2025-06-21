@@ -10,8 +10,6 @@ import polars as pl
 import torch
 import torch.utils.data
 import transformers
-from IPython import embed
-from tqdm import tqdm
 import sys
 sys.path.extend(['.', '..'])
 
