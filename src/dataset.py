@@ -20,6 +20,24 @@ class TaskBatchDataset(Dataset):
         self.batch_size = 1
         self.subset_datasets = []
         self.subset_names = []
+
+        if self.data_args.synthetic_dataset_name or self.data_args.synthetic_dataset_path:
+            print(f"Loading {len(data_args.synthetic_subset_name)} synthetic datasets: {data_args.synthetic_subset_name}")
+            for subset in data_args.synthetic_subset_name:
+                num_sample = data_args.num_sample_per_subset
+                if self.data_args.synthetic_dataset_name:
+                    subset_data = load_dataset(
+                        self.data_args.synthetic_dataset_name,
+                        subset,
+                        split=f"{self.data_args.dataset_split}[:{num_sample}]",
+                    )
+                elif self.data_args.synthetic_dataset_path:
+                    subset_path = os.path.join(self.data_args.synthetic_dataset_path, subset) 
+                    subset_data = load_from_disk(subset_path)
+                    if len(subset_data) > num_sample and num_sample != -1:
+                        subset_data = subset_data.select(range(num_sample))
+                self.subset_datasets.append(subset_data)
+                self.subset_names.append(subset)
         
         if self.data_args.dataset_name or self.data_args.dataset_path:
             print(f"Loading {len(data_args.subset_name)} datasets: {data_args.subset_name}")

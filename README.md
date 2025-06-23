@@ -59,6 +59,16 @@ You can also use `demo.py` to embed your own text and images.
 python demo.py
 ```
 
+## Experimental Results
+MoCa achieves SOTA performance on MMEB benchmark.
+
+<img alt="Experimental Results" src="figures/mmeb.jpg">
+
+MoCa surpasses several strong baselines on ViDoRe-v2 benchmark.
+
+<img alt="Experimental Results" src="figures/vidore.jpg">
+
+
 ## Acknowledgement
 Our code builds on **mmE5**, **VLM2Vec**, and **Qwen‑2.5‑VL**.
 
