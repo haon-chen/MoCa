@@ -62,11 +62,11 @@ python demo.py
 ## Experimental Results
 MoCa achieves SOTA performance on MMEB benchmark.
 
-<img alt="Experimental Results" src="figures/mmeb.jpg">
+<img alt="Experimental Results" src="figures/mmeb.png">
 
 MoCa surpasses several strong baselines on ViDoRe-v2 benchmark.
 
-<img alt="Experimental Results" src="figures/vidore.jpg">
+<img alt="Experimental Results" src="figures/vidore.png">
 
 
 ## Acknowledgement
