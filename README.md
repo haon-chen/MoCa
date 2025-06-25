@@ -1,10 +1,15 @@
-# [MoCa: Modality-aware Continual Pre-training Makes Better Bidirectional Multimodal Embeddings](https://arxiv.org/abs/XXXX.XXXXX)
+# [MoCa: Modality-aware Continual Pre-training Makes Better Bidirectional Multimodal Embeddings](https://arxiv.org/abs/xxxx)
 
-This repo hosts **code, checkpoints, and data scripts** for our paper **xxx**.
-We convert causal Vision‑Language Models into *bidirectional* multimodal embedders through a two‑stage pipeline:
+This repo presents the **code and scripts** for `MoCa-Qwen25VL` series of **multimodal embedding models**.
 
-1. **Modality‑aware Continual Pre‑training** MLM + MAE jointly reconstruct text tokens and image patches.
-2. **Heterogeneous Contrastive Fine‑tuning** Aligns the encoder on captions, long‑form docs, and text‑only pairs.
+[🏠 Homepage]() | [🤖 MoCa-Qwen25VL-7B]() | [🤖 MoCa-Qwen25VL-3B]() | [💻 Code](https://github.com/haon-chen/MoCa) | [📄 Arxiv]() | [📕 PDF]()
+
+**Highlights**
+- SOTA performance on MMEB (General Multimodal) and ViDoRe V2 (Document Retrieval).
+- Supports texts, images, and interleaved input.
+- Generalize on out-of-distribution data well due to innovative methods.
+  - Continually pre-trained on 30B interleaved high quality data with modality-aware reconstruction objectives.
+  - Contrastive fine-tuning on diverse data spanning long-form query-document pairs, curated multimodal pairs, and real-world text pairs.
 
 ---
 
@@ -14,10 +19,17 @@ We convert causal Vision‑Language Models into *bidirectional* multimodal embed
 
 ## Quick Start
 
+### Setup
+
 ```
 pip install -r requirements.txt
 pip install flash-attn==2.5.8
 ```
+
+### Inference
+See scripts in https://huggingface.co/mmembed/MoCa-Qwen25VL-3B and https://huggingface.co/mmembed/MoCa-Qwen25VL-7B.
+
+### Training and Evaluation
 
 - Preparation
 
@@ -70,14 +82,14 @@ MoCa surpasses several strong baselines on ViDoRe-v2 benchmark.
 
 
 ## Acknowledgement
-Our code builds on **mmE5**, **VLM2Vec**, and **Qwen‑2.5‑VL**.
+Our code builds upon **mmE5**, **VLM2Vec**, and **Qwen‑2.5‑VL**.
 
 ## Citation
 ```bibtex
 @article{xxx,
-  title={Transforming VLMs into Powerful Multimodal Encoders via Continual Pre-training},
-  author={},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  title={MoCa: Modality-aware Continual Pre-training Makes Better Bidirectional Multimodal Embeddings},
+  author={Chen, Haonan and Liu, Hong and Luo, Yuping and Wang, Liang and Yang, Nan and Wei, Furu and Dou, Zhicheng},
+  journal={arXiv preprint arXiv:250xxxx},
   year={2025}
 }
 ```
