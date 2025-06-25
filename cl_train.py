@@ -11,7 +11,7 @@ from transformers import (
 )
 import torch.distributed as dist
 
-from src.dataset import TrainDataset, TaskBatchDataset
+from src.dataset import TaskBatchDataset
 from src.collator import QWEN25TrainCollator
 from src.arguments import ModelArguments, DataArguments, TrainingArguments
 from src.model import MMEBModel

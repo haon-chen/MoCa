@@ -60,9 +60,10 @@ fi
 if [ -z "$MAX_LEN" ]; then
   MAX_LEN=1280
 fi
+    # --dataset_name "intfloat/dclm_20b,intfloat/pixelprose_commonpool,intfloat/pixelprose_cc12m_sub_005,intfloat/pixelprose_redcaps_sub_010,intfloat/MAmmoTH-VL-Instruct-12M,intfloat/MMEB-train,intfloat/docmatix,intfloat/visrag_ind,intfloat/visrag_syn,intfloat/tevatron_colpali" \
 
-deepspeed --master_port 18273 cl_train.py --deepspeed "${DS_CONFIG_PATH}" \
-    --dataset_name "intfloat/dclm_20b,intfloat/pixelprose_commonpool,intfloat/pixelprose_cc12m_sub_005,intfloat/pixelprose_redcaps_sub_010,intfloat/MAmmoTH-VL-Instruct-12M,intfloat/MMEB-train,intfloat/docmatix,intfloat/visrag_ind,intfloat/visrag_syn,intfloat/tevatron_colpali" \
+deepspeed --master_port 18273 cpt_train.py --deepspeed "${DS_CONFIG_PATH}" \
+    --dataset_name "mmembed/pixelprose_cc12m_sub_005" \
     --num_sample_per_subset 500000 \
     --model_name "${MODEL_NAME_OR_PATH}" --bf16 --pooling last \
     --dataloader_num_workers 4 \
@@ -72,7 +73,7 @@ deepspeed --master_port 18273 cl_train.py --deepspeed "${DS_CONFIG_PATH}" \
     --warmup_ratio 0.1 --save_steps 200 --save_total_limit 10 --normalize True \
     --min_patch_size 256 --max_patch_size 1024 \
     --micro_batch_size ${MICRO_BATCH_SIZE} \
-    --per_device_train_batch_size ${BATCH_SIZE} \
+    --per_device_train_batch_size 1 \
     --model_backbone "${MODEL_BACKBONE}" \
     --processor_name "${PROCESSOR_NAME}" \
     --resume_from_checkpoint "${OUTPUT_DIR}" \
