@@ -232,7 +232,6 @@ class MLMMAECollator:
     max_equiv_tokens: int = 1024
     use_mae: bool = True
     use_mlm: bool = True
-    stats_path: str = None
 
     def preprocess_image(self, image_bytes):
         try:

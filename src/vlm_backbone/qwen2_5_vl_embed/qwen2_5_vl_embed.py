@@ -1,4 +1,4 @@
-from src.vlm_backbone.qwen2_5_vl_embed.modeling_qwen2_5_vl import Qwen2_5_VLConfig, Qwen2_5_VLPreTrainedModel, Qwen2_5_VLForConditionalGeneration
+from src.vlm_backbone.qwen2_5_vl_embed.modeling_qwen2_5_vl import Qwen2_5_VLConfig, Qwen2_5_VLForConditionalGeneration
 import torch
 import torch.nn as nn
 from typing import Optional, List, Tuple
@@ -35,10 +35,8 @@ class LastTokenPooling(nn.Module):
         token_embeddings: torch.Tensor,
         attention_mask: torch.Tensor,
     ) -> torch.Tensor:
-        # Get sequence lengths for each sample in batch
-        sequence_lengths = attention_mask.sum(dim=1) - 1  # -1 to get last valid token position
+        sequence_lengths = attention_mask.sum(dim=1) - 1
         
-        # Gather the last token embeddings using the sequence lengths
         batch_size = token_embeddings.shape[0]
         batch_indices = torch.arange(batch_size, device=token_embeddings.device)
         last_token_embeddings = token_embeddings[batch_indices, sequence_lengths]
@@ -52,7 +50,7 @@ class Qwen2_5ForEmbedding(Qwen2_5_VLForConditionalGeneration):
     def __init__(self, config, bidirectional=True):
         self.bidirectional = bidirectional
         super().__init__(config)
-        self.pooling = MeanPooling()
+        self.mean_pooling = MeanPooling()
         self.last_token_pooling = LastTokenPooling()
         self.padding_side = "right"  # set it to right by default, user can use setter to change padding_sides
         # Initialize weights and apply final processing, change the model to bidirectional
@@ -291,7 +289,7 @@ class Qwen2_5ForEmbedding(Qwen2_5_VLForConditionalGeneration):
         hidden_states = outputs[0]
 
         if self.bidirectional:
-            return self.pooling(hidden_states, attention_mask)
+            return self.mean_pooling(hidden_states, attention_mask)
         else:
             return self.last_token_pooling(hidden_states, attention_mask)
 
@@ -306,10 +304,6 @@ class Qwen2_5ForMLMMAE(Qwen2_5_VLForConditionalGeneration):
         
         # Create a dedicated decoder layer for MAE
         self.mae_decoder = Qwen2_5_VLDecoderLayer(config, layer_idx=0)
-        
-        # Initialize by copying weights from a middle layer (e.g., layer 6)
-        middle_layer_idx = len(self.model.layers) // 2
-        middle_layer = self.model.layers[middle_layer_idx]
         
         # Output projection layer
         self.mae_proj = nn.Linear(config.hidden_size, 1176 * 4, bias=True)
@@ -579,7 +573,7 @@ class Qwen2_5ForMLMMAE(Qwen2_5_VLForConditionalGeneration):
             position_ids=position_ids,
             use_cache=False,
             output_attentions=False,
-            position_embeddings=position_embeddings,  # critical
+            position_embeddings=position_embeddings,
         )
         
         # Get the processed hidden states
@@ -594,11 +588,8 @@ class Qwen2_5ForMLMMAE(Qwen2_5_VLForConditionalGeneration):
 
         patch_pred = self.mae_proj(masked_features)
 
-        # print(patch_pred)
         # Reshape to match the target
         patch_pred = einops.rearrange(patch_pred, "b (d p) -> (b p) d", p=4)
-
-        # print(patch_pred)
 
         # Calculate MAE loss
         mae_loss = (patch_pred - pixel_labels) ** 2

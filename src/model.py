@@ -316,6 +316,7 @@ class MMEBModelForMLMMAE(MMEBModel):
         self.mae_proj.weight = nn.Parameter(torch.normal(0,0.02, (1176 * 4, self.config.hidden_size)))
         if self.mae_proj.bias is not None:
             self.mae_proj.bias = nn.Parameter(torch.zeros(1176 * 4))
+        # Initialize by copying weights from a middle layer (e.g., layer 6)
         self.mae_decoder.load_state_dict(self.model.layers[len(self.model.layers) // 2].state_dict())
     
     @classmethod

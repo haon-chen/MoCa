@@ -21,7 +21,6 @@ def load_processor(model_args):
         )
     processor.tokenizer.padding_side = "right"
     return processor
-import torch
 
 def format_string(s):
     """Strip the string, remove carriage returns, and capitalize the first character."""

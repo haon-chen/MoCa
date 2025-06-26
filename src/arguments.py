@@ -109,9 +109,6 @@ class DataArguments:
     dataset_ratio: float = field(
         default=1.0, metadata={"help": "dataset ratio"}
     )
-    use_task_batch: bool = field(
-        default=False, metadata={"help": "Whether to use task-specific batching (each batch contains data from only one subset)"}
-    )
     image_dir: str = field(
         default=None, metadata={"help": "Image directory path"}
     )

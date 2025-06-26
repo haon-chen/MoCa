@@ -16,7 +16,6 @@ from src.collator import QWEN25TrainCollator
 from src.arguments import ModelArguments, DataArguments, TrainingArguments
 from src.model import MMEBModel
 from src.trainer import MMEBTrainer
-import torch.distributed as dist
 from transformers.trainer_utils import get_last_checkpoint
 
 logger = logging.getLogger(__name__)
@@ -35,19 +34,6 @@ def main():
     model_args: ModelArguments
     data_args: DataArguments
     training_args: TrainingArguments
-    
-    # Configure logging
-    if data_args.use_task_batch and training_args.local_rank == 0:
-        logging.basicConfig(
-            format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-            datefmt="%m/%d/%Y %H:%M:%S",
-            level=logging.INFO,
-        )
-        logger.info("=" * 80)
-        logger.info("TASK-SPECIFIC BATCHING ENABLED")
-        logger.info("This will ensure each batch contains data from only one subset")
-        logger.info("Batch consistency will be verified during training")
-        logger.info("=" * 80)
 
     force_download = True
     if dist.get_world_size() == 1:
@@ -71,13 +57,9 @@ def main():
         )
         processor.tokenizer.padding_side = "right"
 
-    if data_args.use_task_batch:
-        logger.info("Using task-specific batching (each batch contains data from only one subset)")
-        train_dataset = TaskBatchDataset(data_args, model_args)
-        train_dataset.set_batch_size(training_args.per_device_train_batch_size)
-    else:
-        logger.info("Using standard batching (mixed subsets)")
-        train_dataset = TrainDataset(data_args, model_args)
+    logger.info("Using task-specific batching (each batch contains data from only one subset)")
+    train_dataset = TaskBatchDataset(data_args, model_args)
+    train_dataset.set_batch_size(training_args.per_device_train_batch_size)
     
     collator = QWEN25TrainCollator(data_args, model_args, processor)
 

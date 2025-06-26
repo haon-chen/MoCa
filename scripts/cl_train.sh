@@ -38,10 +38,6 @@ if [ -z "$IMAGE_RESOLUTION" ]; then
   IMAGE_RESOLUTION=original
 fi
 
-if [ -z "$USE_TASK_BATCH" ]; then
-  USE_TASK_BATCH=True
-fi
-
 if [ -z "$MAX_LEN" ]; then
   MAX_LEN=1280
 fi
@@ -68,5 +64,4 @@ deepspeed --master_port 18271 cl_train.py --deepspeed "${DS_CONFIG_PATH}" \
     --negative_ratio 2 \
     --image_resolution "${IMAGE_RESOLUTION}" \
     --min_patch_size 256 --max_patch_size 1024 \
-    --use_task_batch ${USE_TASK_BATCH} \
     --report_to none "$@"

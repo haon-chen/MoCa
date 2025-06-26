@@ -44,6 +44,7 @@ PYTHONPATH=src/ python ./eval.py \
   --subset_name Wiki-SS-NQ Visual7W-Pointing RefCOCO RefCOCO-Matching ImageNet-1K N24News HatefulMemes SUN397 VOC2007 InfographicsVQA ChartQA A-OKVQA DocVQA OK-VQA Visual7W VisDial CIRR NIGHTS WebQA VisualNews_i2t VisualNews_t2i MSCOCO_i2t MSCOCO_t2i MSCOCO Place365 ImageNet-A ImageNet-R ObjectNet Country211 ScienceQA VizWiz GQA TextVQA OVEN FashionIQ EDIS \
   --dataset_split test --per_device_eval_batch_size ${BATCH_SIZE} \
   --image_dir "images/eval_images/" \
+  --min_patch_size 256 --max_patch_size 1024 \
   --image_resolution "${IMAGE_RESOLUTION}" \
   --model_backbone "${MODEL_BACKBONE}" \
   --bidirectional ${BIDIRECTIONAL}

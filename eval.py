@@ -80,20 +80,15 @@ def main():
             dir_name = model_args.checkpoint_path.split('/')[-2].split('-')[-1]+'/'+base_name
         else:
             dir_name = os.path.basename(model_args.checkpoint_path).split('-')[-1]
-        # embed()
-        # input()
         output_path = f"{data_args.encode_output_path}/{dir_name}/{base_name}/" if base_name.startswith("checkpoint") else f"{data_args.encode_output_path}/{dir_name}/"
     else:
         output_path = data_args.encode_output_path
 
-    print(output_path)
-    # assert False
-
     os.makedirs(output_path, exist_ok=True)
 
     if model_args.model_backbone == 'qwen2_vl' or model_args.model_backbone == 'qwen2_5_vl':
-        min_pixels = 256*28*28
-        max_pixels = 1024*28*28
+        min_pixels = model_args.min_patch_size*28*28
+        max_pixels = model_args.max_patch_size*28*28
         processor = AutoProcessor.from_pretrained(
             model_args.processor_name if model_args.processor_name else model_args.model_name,
             trust_remote_code=True,
@@ -196,8 +191,7 @@ def main():
                     batch = {key: value.to(training_args.device) if value is not None else value for key, value in batch.items()}
                     with torch.autocast(enabled=True, dtype=torch.bfloat16, device_type="cuda"):
                         output = model(qry=batch)
-                    if model_args.model_backbone != "mmembed" and model_args.model_backbone != "gme":
-                        batch = {key: value.to(training_args.device) if value is not None else value for key, value in batch.items()}
+                    batch = {key: value.to(training_args.device) if value is not None else value for key, value in batch.items()}
                     output = model(tgt=batch)
                     encoded_tensor.append(output["tgt_reps"].cpu().detach().float().numpy())
             encoded_tensor = np.concatenate(encoded_tensor)

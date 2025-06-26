@@ -1,4 +1,4 @@
-# [MoCa: Modality-aware Continual Pre-training Makes Better Bidirectional Multimodal Embeddings](https://arxiv.org/abs/xxxx)
+# MoCa: Modality-aware Continual Pre-training Makes Better Bidirectional Multimodal Embeddings
 
 This repo presents the **code and scripts** for `MoCa-Qwen25VL` series of **multimodal embedding models**.
 
@@ -47,6 +47,7 @@ We have provided example scripts in the `scripts/` directory to help you get sta
 ```
 bash scripts/cpt_train.sh
 ```
+**Caution:** Calculating statistics for batching the cpt data could takes a while. However, this process is only needed once and the stats will be saved in the `${DATA_DIR}/cache/stats` directory.
 - Contrastive Learning
 ```
 bash scripts/cl_train.sh

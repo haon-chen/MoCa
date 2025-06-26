@@ -42,8 +42,8 @@ def main():
         
     # Initialize processor
     if model_args.model_backbone == 'qwen2_vl' or model_args.model_backbone == 'qwen2_5_vl':
-        min_pixels = 256*28*28
-        max_pixels = 1024*28*28
+        min_pixels = model_args.min_patch_size*28*28
+        max_pixels = model_args.max_patch_size*28*28
         processor = AutoProcessor.from_pretrained(
             model_args.processor_name if model_args.processor_name else model_args.model_name,
             trust_remote_code=True,
@@ -87,9 +87,6 @@ def main():
     train_dataset.set_epoch(0)
     
     # Always use MLMMAECollator, control by use_mae/use_mlm
-    stats_path = os.path.join(data_args.stats_dir, "patch_stats.pt")
-    if not os.path.exists(stats_path):
-        stats_path = None
     collator = MLMMAECollator(
         processor=processor,
         mask_prob=data_args.mask_prob,
@@ -97,7 +94,6 @@ def main():
         max_equiv_tokens=data_args.max_len,
         use_mae=use_mae,
         use_mlm=use_mlm,
-        stats_path=stats_path
     )
 
     model = MMEBModelForMLMMAE.build(model_args, training_args, use_mae=use_mae, use_mlm=use_mlm)
