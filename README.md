@@ -2,7 +2,7 @@
 
 This repo presents the **code and scripts** for `MoCa-Qwen25VL` series of **multimodal embedding models**.
 
-[🏠 Homepage]() | [🤖 MoCa-Qwen25VL-7B]() | [🤖 MoCa-Qwen25VL-3B]() | [💻 Code](https://github.com/haon-chen/MoCa) | [📄 Arxiv]() | [📕 PDF]()
+[🏠 Homepage](https://haon-chen.github.io/MoCa/) | [🤖 MoCa-Qwen25VL-7B](https://huggingface.co/MoCa/MoCa-Qwen25VL-7B) | [🤖 MoCa-Qwen25VL-3B](https://huggingface.co/MoCa/MoCa-Qwen25VL-3B) | [💻 Code](https://github.com/haon-chen/MoCa) | [📄 Arxiv]() | [📕 PDF]()
 
 **Highlights**
 - SOTA performance on MMEB (General Multimodal) and ViDoRe V2 (Document Retrieval).
@@ -37,7 +37,7 @@ See scripts in https://huggingface.co/mmembed/MoCa-Qwen25VL-3B and https://huggi
 bash scripts/prepare_images.sh
 ```
 
-This script will download images for Heterogeneous Contrastive Learning from [MoCa CL Pairs](https://huggingface.co/datasets/intfloat/mmE5-MMEB-hardneg), [mmE5 Synthetic Dataset](https://huggingface.co/datasets/intfloat/mmE5-synthetic), and [MMEB-eval](https://huggingface.co/datasets/TIGER-Lab/MMEB-eval).
+This script will download images for Heterogeneous Contrastive Learning from [MoCa CL Pairs](https://huggingface.co/datasets/MoCa/mmE5-MMEB-hardneg), [mmE5 Synthetic Dataset](https://huggingface.co/datasets/MoCa/mmE5-synthetic), and [MMEB-eval](https://huggingface.co/datasets/TIGER-Lab/MMEB-eval).
 
 **Caution:** This could take a while as the images are large in size. Make sure you have enough disk space (at least 1T).
 
