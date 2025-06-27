@@ -4,7 +4,7 @@ set -x
 set -e
 
 if [ -z "$MODEL_NAME" ]; then
-    MODEL_NAME="intfloat/MoCa-Qwen25VL-3B"
+    MODEL_NAME="moca-embed/MoCa-Qwen25VL-3B"
 fi
 
 if [ -z "$COLLECTION_NAME" ]; then

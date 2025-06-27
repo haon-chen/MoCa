@@ -44,7 +44,7 @@ fi
 
 deepspeed --master_port 18271 cl_train.py --deepspeed "${DS_CONFIG_PATH}" \
     --subset_name visrag_ind visrag_syn tevatron_colpali TAT-DQA ArxivQA InfoSeek_it2t InfoSeek_it2it ImageNet_1K N24News HatefulMemes SUN397 VOC2007 InfographicsVQA ChartQA A-OKVQA DocVQA OK-VQA Visual7W VisDial CIRR NIGHTS WebQA VisualNews_i2t VisualNews_t2i MSCOCO_i2t MSCOCO_t2i MSCOCO \
-    --dataset_name "intfloat/MoCa-CL-Pairs" \
+    --dataset_name "moca-embed/MoCa-CL-Pairs" \
     --synthetic_dataset_name "intfloat/mmE5-synthetic" \
     --synthetic_subset_name Classification Retrieval VQA \
     --model_name "${MODEL_NAME_OR_PATH}" --bf16 --pooling last \

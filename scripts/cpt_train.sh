@@ -62,7 +62,7 @@ if [ -z "$MAX_LEN" ]; then
 fi
 
 deepspeed --master_port 18273 cpt_train.py --deepspeed "${DS_CONFIG_PATH}" \
-    --dataset_name "intfloat/dclm_20b,intfloat/pixelprose_commonpool,intfloat/pixelprose_cc12m_sub_005,intfloat/pixelprose_redcaps_sub_010,intfloat/MAmmoTH-VL-Instruct-12M,intfloat/MMEB-train,intfloat/docmatix,intfloat/visrag_ind,intfloat/visrag_syn,intfloat/tevatron_colpali" \
+    --dataset_name "moca-embed/dclm_20b,moca-embed/pixelprose_commonpool,moca-embed/pixelprose_cc12m_sub_005,moca-embed/pixelprose_redcaps_sub_010,moca-embed/MAmmoTH-VL-Instruct-12M,moca-embed/MMEB-train,moca-embed/docmatix,moca-embed/visrag_ind,moca-embed/visrag_syn,moca-embed/tevatron_colpali" \
     --num_sample_per_subset 500000 \
     --model_name "${MODEL_NAME_OR_PATH}" --bf16 --pooling last \
     --dataloader_num_workers 4 \

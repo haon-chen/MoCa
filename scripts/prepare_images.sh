@@ -51,7 +51,7 @@ done
 SUPP_MMEB_DATASETS=("TAT-DQA" "ArxivQA" "colpali_tevatron" "visrag_ind")
 for DATASET in "${SUPP_MMEB_DATASETS[@]}"; do
     if [ ! -e images/image_zips/${DATASET}.tar.gz ]; then
-        wget -O images/image_zips/${DATASET}.tar.gz "https://huggingface.co/datasets/intfloat/MoCa-CL-Pairs/resolve/main/supplement_images_zip/${DATASET}.tar.gz"
+        wget -O images/image_zips/${DATASET}.tar.gz "https://huggingface.co/datasets/moca-embed/MoCa-CL-Pairs/resolve/main/supplement_images_zip/${DATASET}.tar.gz"
         tar -I "pigz -d -p 8" -xf images/image_zips/${DATASET}.tar.gz -C images/
     fi
 done
@@ -61,7 +61,7 @@ VISRAG_SYN="visrag_syn.tar.gz"
 VISRAG_SYN_PARTS=("aa" "ab" "ac" "ad" "ae")
 for PART in "${VISRAG_SYN_PARTS[@]}"; do
     if [ ! -e images/image_zips/${VISRAG_SYN}.part_${PART} ]; then
-        wget -O images/image_zips/${VISRAG_SYN}.part_${PART} "https://huggingface.co/datasets/intfloat/MoCa-CL-Pairs/resolve/main/supplement_images_zip/${VISRAG_SYN}.part_${PART}"
+        wget -O images/image_zips/${VISRAG_SYN}.part_${PART} "https://huggingface.co/datasets/moca-embed/MoCa-CL-Pairs/resolve/main/supplement_images_zip/${VISRAG_SYN}.part_${PART}"
     fi
 done
 
