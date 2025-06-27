@@ -8,7 +8,7 @@ import torch.nn.functional as F
 def compute_similarity(q_reps, p_reps):
     return torch.matmul(q_reps, p_reps.transpose(0, 1))
 
-model_name = "intfloat/MoCa-Qwen25VL-3B"
+model_name = "moca-embed/MoCa-Qwen25VL-3B"
 processor_name = "Qwen/Qwen2.5-VL-3B-Instruct"
 
 # Load Processor and Model
