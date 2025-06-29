@@ -54,12 +54,12 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">MoCa: <u>Mo</u>dality-aware <u>C</u>ontinual Pre-tr<u>a</u>ining Makes Better Bidirectional Multimodal Embeddings</h1>
+            <h1 class="title is-1 publication-title">MoCa: Modality-aware Continual Pre-training Makes Better Bidirectional Multimodal Embeddings</h1>
             <div class="is-size-5 publication-authors">
               <!-- Paper authors -->
               <span class="author-block"><sup>1</sup><a href="https://haon-chen.github.io/" target="_blank">Haonan Chen</a><sup>*</sup>,</span>
-              <span class="author-block"><sup>2</sup><a href="https://liuhong99.github.io/" target="_blank">Hong Liu</a><sup>*</sup>,</span>
-              <span class="author-block"><sup>3</sup><a href="https://yuping.me/" target="_blank">Yuping Luo</a><sup>*</sup>,</span>
+              <span class="author-block"><sup>2</sup><a href="https://liuhong99.github.io/" target="_blank">Hong Liu</a>,</span>
+              <span class="author-block"><sup>3</sup><a href="https://yuping.me/" target="_blank">Yuping Luo</a>,</span>
               <span class="author-block"><sup>4</sup>Liang Wang,</span>
               <span class="author-block"><sup>4</sup>Nan Yang,</span>
               <span class="author-block"><sup>4</sup><a href="https://thegenerality.com/" target="_blank">Furu Wei</a>,</span>
@@ -76,27 +76,48 @@
               <span class="author-block"><sup>3</sup> <code>yupingl@cs.princeton.edu</code></span>
               <br>
               <span class="author-block"><sup>4</sup> Microsoft Corporation, <code>{wangliang,nanya,fuwei}@microsoft.com</code></span>
-              <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
+              <span class="eql-cntrb"><small><br><sup>*</sup>Work done during Haonan’s internship at Microsoft Research Asia</small></span>
             </div>
 
             <div class="column has-text-centered">
               <div class="publication-links">
+                <!-- Home page -->
+                <span class="link-block">
+                  <a href="https://haon-chen.github.io/MoCa/" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">🏠</span>
+                      <span>Home</span>
+                  </a>
+                </span>
 
                 <!-- HF model link -->
                 <span class="link-block">
-                  <a href="https://huggingface.co/mmembed" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <a href="https://huggingface.co/moca-embed/MoCa-Qwen25VL-7B" target="_blank" class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">🤗</span>
-                      <span>HuggingFace</span>
+                      <span>MoCa-Qwen25VL-7B</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://huggingface.co/moca-embed/MoCa-Qwen25VL-3B" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">🤗</span>
+                      <span>MoCa-Qwen25VL-3B</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://huggingface.co/moca-embed/datasets" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">🤗</span>
+                      <span>Datasets</span>
                   </a>
                 </span>
 
                 <!-- Arxiv PDF link -->
-                <span class="link-block">
+                <!-- <span class="link-block">
                   <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon"><i class="fas fa-file-pdf"></i></span>
                     <span>Paper</span>
                   </a>
-                </span>
+                </span> -->
 
                 <!-- Supplementary PDF link -->
                 <!-- <span class="link-block">
@@ -118,7 +139,7 @@
                 <span class="link-block">
                   <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon"><i class="ai ai-arxiv"></i></span>
-                    <span>arXiv</span>
+                    <span>Paper</span>
                   </a>
                 </span>
               </div>
@@ -153,9 +174,30 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              Multimodal embedding models, built upon causal Vision Language Models (VLMs), have shown promise in various tasks. However, current approaches face three key limitations: the use of causal attention in VLM backbones is suboptimal for embedding tasks; limited diversity in training objectives and data; and scalability issues due to reliance on high-quality labeled paired data for contrastive learning. To address these, we propose MoCa, a two-stage framework for transforming pre-trained VLMs into effective bidirectional multimodal embedding models. The first stage, Modality-aware Continual Pre-training, introduces a joint reconstruction objective that simultaneously denoises interleaved text and image inputs, enhancing bidirectional, context-aware reasoning. The second stage, Heterogeneous Contrastive Fine-tuning, leverages diverse, semantically rich multimodal data beyond simple image-caption pairs to enhance generalization and alignment.
-              Our method resolves the stated limitations by introducing bidirectional attention via continual pre-training, employing diverse multimodal data for enhanced representation robustness, and scaling effectively with massive unlabeled datasets through joint reconstruction objectives.
-              Experiments demonstrate that MoCa consistently improves performance across MMEB and ViDoRe-v2 benchmarks, achieving new state-of-the-art results, and exhibits strong scalability with both model size and training data.
+              Multimodal embedding models, built upon causal Vision Language
+              Models (VLMs), have shown promise in various tasks. However,
+              current approaches face three key limitations: the use of causal
+              attention in VLM backbones is suboptimal for embedding tasks;
+              scalability issues due to reliance on high-quality labeled paired
+              data for contrastive learning; and limited diversity in training
+              objectives and data. To address these issues, we propose MoCa, a
+              two-stage framework for transforming pre-trained VLMs into
+              effective bidirectional multimodal embedding models. The first
+              stage, Modality-aware Continual Pre-training, introduces a joint
+              reconstruction objective that simultaneously denoises interleaved
+              text and image inputs, enhancing bidirectional context-aware
+              reasoning. The second stage, Heterogeneous Contrastive
+              Fine-tuning, leverages diverse, semantically rich multimodal data
+              beyond simple image-caption pairs to enhance generalization and
+              alignment. Our method addresses the stated limitations by
+              introducing bidirectional attention through continual
+              pre-training, scaling effectively with massive unlabeled datasets
+              via joint reconstruction objectives, and utilizing diverse
+              multimodal data for enhanced representation robustness.
+              Experiments demonstrate that MoCa consistently improves
+              performance across MMEB and ViDoRe-v2 benchmarks, achieving new
+              state-of-the-art results, and exhibits strong scalability with
+              both model size and training data on MMEB.
             </p>
           </div>
         </div>
@@ -183,7 +225,7 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          <h2 class="title is-3">MoCa: <u>Mo</u>dality-aware <u>C</u>ontinual Pre-tr<u>a</u>ining</h2>
+          <h2 class="title is-3">Method</h2>
           <div class="content has-text-justified">
             <p>
               Starting from pre-trained VLMs, our approach consists of two stages:
@@ -191,7 +233,7 @@
                 <li><strong>Modality-aware Continual Pre-training</strong>: We introduce a joint reconstruction objective that requires the model to simultaneously denoise interleaved text and image inputs, which encourages the model to jointly reason across modalities.
                   <ol>
                     <li><strong>For text</strong>: We apply masked language modeling (MLM), where masked tokens are predicted using the full multimodal context.</li>
-                    <li><strong>For images</strong>: We adopt a masked autoencoding (MAE) strategy: a subset of image patches is randomly masked and reconstructed by a lightweight decoder conditioned on image and text contexts.</li>
+                    <li><strong>For images</strong>: We adopt masked autoencoding (MAE): a subset of image patches are randomly masked and reconstructed by a lightweight decoder conditioned on image and text contexts.</li>
                   </ol>
                 </li>
                 <li><strong>Heterogeneous Contrastive Fine-tuning</strong>: As opposed to previous works which used mainly image-caption pairs, we add diverse heterogeneous data including:
@@ -229,7 +271,7 @@
           <h2 class="title is-3">Overall Results</h2>
           <div class="content has-text-justified">
             <p>
-              We present the general multimodal embedding performances on MMEB and the long-form document-level retrieval performances.
+              We present the general multimodal embedding performances on MMEB and the long-form document-level retrieval performances on ViDoRe-v2.
               MoCa surpasses all strong baselines on both benchmarks, demonstrating the effectiveness of our training pipeline in improving multimodal embedding quality.
             </p>
           </div>
@@ -243,20 +285,20 @@
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <div class="content has-text-justified">
-            <p>
+            <!-- <p>
               Below are the results on the MMEB benchmark, which includes 36 tasks across four categories: Classification, Visual Question Answering (VQA), Retrieval, and Visual Grounding.
               In addition to existing baselines, we train three variants of Qwen-2.5-VL with different model sizes and attention types.
               We highlight the best scores in <strong>bold</strong> and the second-best scores with an <u>underline</u>.
-            </p>
+            </p> -->
             <img src="static/images/mteb.png" alt="mteb"/>
-            <p>
+            <!-- <p>
               Below are the results on the ViDoRe-v2 benchmark, which includes 7 tasks.
             "Syn" is short for synthetic, "Mul" is short for multilingual, and "Bio" is short for Biomedical.
             We highlight the best scores in <strong>bold</strong> and the second-best scores with an <u>underline</u>.
-            </p>
+            </p> -->
             <img src="static/images/vidore_v2.png" alt="vidore"/>
-            <p>Several key findings emerge from the results:</p>
-            <ol>
+            <!-- <p>Several key findings emerge from the results:</p> -->
+            <!-- <ol>
                 <li>The combination of a VLM backbone with bidirectional attention, continual pretraining (CPT), and heterogeneous contrastive learning (CL) consistently outperforms other variants.
                 Specifically, we find that <strong>"bidirectional + CPT + CL"</strong> yields better results than <strong>"causal + CL"</strong>, which itself outperforms <strong>"bidirectional + CL"</strong> without CPT.
                 This confirms the importance of modality-aware pretraining in unlocking the full potential of bidirectional architectures.</li>
@@ -264,7 +306,7 @@
                 <li>Scaling our approach to a 7B model leads to clear gains across all task categories in MMEB, setting new state-of-the-art results.</li>
                 <li>On Vidore, our 3B model achieves the best average performance despite using significantly fewer parameters.
                 This demonstrates the effectiveness of our training strategy in producing robust embeddings.</li>
-            </ol>
+            </ol> -->
           </div>
         </div>
       </div>
@@ -279,7 +321,7 @@
           <h2 class="title is-3">Ablation Studies</h2>
           <div class="content has-text-justified">
             <p>
-              To understand the contribution of each major design choice in our framework, we conduct ablation studies on both the <em>Modality-aware Continual Pre-training</em> and <em>Heterogeneous Contrastive Fine-tuning</em> stages.
+              To understand the contribution of each major design choice in our framework, we conduct ablation studies on both the <strong>Modality-aware Continual Pre-training</strong> and <strong>Heterogeneous Contrastive Fine-tuning</strong> stages.
               As shown in in the following table, removing any key component leads to a consistent performance drop on both benchmarks (MMEB and Vidore-v2), demonstrating the importance of each part.
             </p>
           </div>
@@ -293,7 +335,7 @@
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <img src="static/images/ablation.png" alt="ablation studies" style="height: 250px;"/>
-          <div class="content has-text-justified">
+          <!-- <div class="content has-text-justified">
             <p><strong>Modality-aware Continual Pre-training.</strong> The ablation of either the <em>Masked Language Modeling</em> (MLM) or the <em>Masked Autoencoding</em> (MAE) objective results in a performance decline, indicating that both text and image reconstruction are essential for learning modality-specific representations.
             Disabling <em>both</em> yields the largest decline, demonstrating the joint effectiveness between MLM and MAE in training a robust bidirectional encoder.</p>
 
@@ -303,7 +345,7 @@
             Finally, removing the <em>task-aware batching</em> technique, where data from different tasks are jointly trained in each batch, leads to performance degradation.
             This technique helps prevent the model from overfitting to task-specific patterns and encourages it to learn more sample-discriminative representations, which is crucial for generalization across diverse task formats.</p>
 
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -333,13 +375,13 @@
         <div class="column is-four-fifths">
           <div class="content has-text-justified">
             <img src="static/images/scaling_law.png" alt="scaling law"/>
-            <p>
+            <!-- <p>
               As shown in the figure, the downstream performance on MMEB steadily improves as the number of
               CPT steps increases. This demonstrates that modality-aware pre-training helps the model develop
               stronger bidirectional representations, which are then more effectively aligned during contrastive
               fine-tuning. The results demonstrate that CPT provides a progressively better initialization for CL,
               leading to more robust and transferable multimodal embeddings.
-            </p>
+            </p> -->
           </div>
         </div>
       </div>
