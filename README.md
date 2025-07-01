@@ -2,7 +2,7 @@
 
 This repo presents the **code and scripts** for `MoCa-Qwen25VL` series of **multimodal embedding models**.
 
-[🏠 Homepage](https://haon-chen.github.io/MoCa/) | [🤖 MoCa-Qwen25VL-7B](https://huggingface.co/moca-embed/MoCa-Qwen25VL-7B) | [🤖 MoCa-Qwen25VL-3B](https://huggingface.co/moca-embed/MoCa-Qwen25VL-3B) | [📚 Datasets](https://huggingface.co/moca-embed/datasets) | [📄 Paper]()
+[🏠 Homepage](https://haon-chen.github.io/MoCa/) | [🤖 MoCa-Qwen25VL-7B](https://huggingface.co/moca-embed/MoCa-Qwen25VL-7B) | [🤖 MoCa-Qwen25VL-3B](https://huggingface.co/moca-embed/MoCa-Qwen25VL-3B) | [📚 Datasets](https://huggingface.co/moca-embed/datasets) | [📄 Paper](https://arxiv.org/abs/2506.23115)
 
 **Highlights**
 - SOTA performance on MMEB (General Multimodal) and ViDoRe V2 (Document Retrieval).
@@ -87,10 +87,10 @@ Our code builds upon **mmE5**, **VLM2Vec**, and **Qwen‑2.5‑VL**.
 
 ## Citation
 ```bibtex
-@article{xxx,
+@article{chen2025moca,
   title={MoCa: Modality-aware Continual Pre-training Makes Better Bidirectional Multimodal Embeddings},
   author={Chen, Haonan and Liu, Hong and Luo, Yuping and Wang, Liang and Yang, Nan and Wei, Furu and Dou, Zhicheng},
-  journal={arXiv preprint arXiv:250xxxx},
+  journal={arXiv preprint arXiv:2506.23115},
   year={2025}
 }
 ```
