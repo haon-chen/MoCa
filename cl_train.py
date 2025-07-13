@@ -73,11 +73,6 @@ def main():
     )
     train_dataset.trainer = trainer
 
-    if training_args.local_rank == 0:  # Only print on main process
-        trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-        total_params = sum(p.numel() for p in model.parameters())
-        print(f"Total Parameters: {total_params:,}")
-        print(f"Trainable Parameters: {trainable_params:,}")
     if training_args.resume_from_checkpoint is not None:
         if os.path.exists(training_args.resume_from_checkpoint):
             resume_from_checkpoint = get_last_checkpoint(training_args.resume_from_checkpoint)
