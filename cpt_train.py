@@ -107,13 +107,6 @@ def main():
         train_dataset=train_dataset,
         data_collator=collator,
     )
-    
-    # Display model parameters
-    if training_args.local_rank == 0:  # Only print on main process
-        trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-        total_params = sum(p.numel() for p in model.parameters())
-        print(f"Total Parameters: {total_params:,}")
-        print(f"Trainable Parameters: {trainable_params:,}")
         
     # Resume from checkpoint if specified
     resume_from_checkpoint = None
