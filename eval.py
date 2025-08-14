@@ -189,9 +189,6 @@ def main():
             with torch.no_grad():
                 for batch_idx, batch in enumerate(tqdm(eval_tgt_loader, desc="Encode target")):
                     batch = {key: value.to(training_args.device) if value is not None else value for key, value in batch.items()}
-                    with torch.autocast(enabled=True, dtype=torch.bfloat16, device_type="cuda"):
-                        output = model(qry=batch)
-                    batch = {key: value.to(training_args.device) if value is not None else value for key, value in batch.items()}
                     output = model(tgt=batch)
                     encoded_tensor.append(output["tgt_reps"].cpu().detach().float().numpy())
             encoded_tensor = np.concatenate(encoded_tensor)
